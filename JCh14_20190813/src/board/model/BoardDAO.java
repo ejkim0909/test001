@@ -68,6 +68,49 @@ String sql="select * from "
 
 		return list;
 	}
+	
+	public void boardWrite(String name, String subject, String content, String password){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int num = 1;
+		
+		
+		
+		try{
+			conn = ds.getConnection();
+			String sql = "SELECT NULLIF(MAX(num), 0)+1 AS NUM FROM BOARD";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()){
+				num = rs.getInt("num");
+			}
+			
+			//sql = "INSERT INTO BOARD (num, name, password, subject, content, write_date, write_time, ref, step, lev, read_cnt, child_cnt) values(?, ?, ?, ?, ?, curdate(), curtime(), ?, 0, 0, 0, 0)";
+			sql = "INSERT INTO BOARD (num, name, password, subject, content, write_date, write_time, ref, step, lev, read_cnt, child_cnt) values(?, ?, ?, ?, ?, sysdate, CURRENT_TIMESTAMP, ?, 0, 0, 0, 0)";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, num);
+			pstmt.setString(2, name);
+			pstmt.setString(3, password);
+			pstmt.setString(4, subject);
+			pstmt.setString(5, content);
+			pstmt.setInt(6, num);
+			
+			pstmt.executeUpdate();
+		} catch (Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
 }
 
 

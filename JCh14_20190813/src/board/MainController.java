@@ -50,6 +50,17 @@ public class MainController extends HttpServlet {
 			cmd.excute(request, response);
 			viewPage="list.jsp";
 		}
+		
+		if(cmdURI.equals("/boardWriteForm.bbs")){
+			viewPage = "boardWrite.jsp";
+		}
+		
+		// 	
+		if(cmdURI.equals("/boardWrite.bbs")){
+			cmd = new BoardWriteCmd();
+			cmd.excute(request, response);
+			viewPage = "boardList.bbs";
+		}
 		RequestDispatcher rDis = request.getRequestDispatcher(viewPage);
 		rDis.forward(request, response);
 	}
