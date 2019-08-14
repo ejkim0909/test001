@@ -17,7 +17,7 @@ import board.command.*;
 @WebServlet("*.bbs")
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,8 +43,8 @@ public class MainController extends HttpServlet {
 		String cmdURI = rURI.substring(rPath.length());
 		String viewPage = null;
 		BoardCmd cmd = null;
-		
-		if (cmdURI.contentEquals("/list.bbs") 
+
+		if (cmdURI.contentEquals("/list.bbs")
 				|| cmdURI.contentEquals("/*.bbs") ) {
 			cmd = new BoardListCmd();
 			cmd.excute(request, response);
